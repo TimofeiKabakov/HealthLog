@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
+from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 
@@ -21,3 +22,12 @@ def sign_up(request):
     else:
         form = RegisterForm()
     return render(request, 'registration/sign_up.html', {"form": form})
+
+def password_reset(request):
+    if request.method == 'POST':
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            return redirect('/login')
+    else:
+        password_reset_form = PasswordResetForm()
+    return render(request, 'registration/password_reset.html', {"password_reset_form": password_reset_form})
