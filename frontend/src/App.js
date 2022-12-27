@@ -1,5 +1,5 @@
-import './App.css';
-import React, { useState } from 'react';
+import "./App.css";
+import React, { useState } from "react";
 
 const Sidebar = () => {
   const sidebarItems = [
@@ -9,9 +9,9 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className='sidebar'>
+    <aside className="sidebar">
       <ul>
-        {sidebarItems.map(item => (
+        {sidebarItems.map((item) => (
           <li key={item.id}>
             <a href={item.url}>{item.label}</a>
           </li>
@@ -19,7 +19,7 @@ const Sidebar = () => {
       </ul>
     </aside>
   );
-}
+};
 
 const App = () => {
   const [results, setResults] = useState([]);
@@ -32,8 +32,8 @@ const App = () => {
 
     const response = await fetch(url);
     return await response.json();
-  }
-  
+  };
+
   const handleSearch = (event) => {
     event.preventDefault();
     const query = event.target.elements.query.value;
@@ -43,8 +43,8 @@ const App = () => {
   return (
     <div>
       <form onSubmit={handleSearch}>
-        <input type='text' name='query' />
-        <button type='submit'>Search</button>
+        <input type="text" name="query" />
+        <button type="submit">Search</button>
       </form>
       {results.totalHits > 0 && (
         <ul>
@@ -55,6 +55,6 @@ const App = () => {
       )}
     </div>
   );
-}
+};
 
 export default App;
