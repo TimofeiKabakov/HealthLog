@@ -18,7 +18,7 @@ from django.urls import path, include
 from rest_framework import routers
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect
 from diet import views
 
 router = routers.DefaultRouter()
@@ -27,6 +27,6 @@ router.register("foods", views.FoodView, "food")
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
-    path("login/", LoginView.as_view()),
-    path("", login_required(TemplateView.as_view(template_name="index.html"), login_url="/login")),
+    path("users/", include("users.urls")),
+    path("", login_required(TemplateView.as_view(template_name="index.html"), login_url="users:login")),
 ]
