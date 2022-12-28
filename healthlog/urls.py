@@ -20,7 +20,7 @@ from diet import views
 from django.views.generic import TemplateView
 
 router = routers.DefaultRouter()
-router.register(r'foods', views.FoodView, 'food')
+router.register('foods', views.FoodView, 'food')
 
 urlpatterns = [
     path("admin/", admin.site.urls),
