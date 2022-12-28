@@ -6,7 +6,7 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
-import CreateWorkOut from "./CreateWorkOut";
+import ExercisePage from "./ExercisesPage";
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ export default class HomePage extends Component {
         <Router>
             <Switch>
                 <Route exact path='/' render={this.renderHomePage} />
-                <Route exact path='/create' component={CreateWorkOut} />
+                <Route exact path='/create' component={ExercisePage} />
             </Switch>
         </Router>
     );
