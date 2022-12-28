@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import LogoutButton from "./LogoutButton";
 
 const Header = () => {
   const pages = [
@@ -16,6 +17,7 @@ const Header = () => {
             <Link to={page.url}> {page.label} </Link>
           </span>
         ))}
+        <LogoutButton />
       </ul>
     </div>
   );
