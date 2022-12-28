@@ -1,0 +1,28 @@
+{% block title %} Login {% endblock %}
+
+{% block contents %}
+    <!--if the form was sent but error catched, display a warning-->
+    {% if form.errors %}
+        <p>Your username or password didn't match. Try again.</p>
+    {% endif %}
+
+    <!--check if user was redirected to this page because of not being logged in and ask them to log in-->
+    <!--if user was logged in but still was redirected, it means they did not have permission to access that page,
+    ask them to log in with an account that has access-->
+    {% if next %}
+        {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.</p>
+        {% else %}
+        <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %} 
+        {{form}}
+        <p>Don't have an account? Create one <a href="/sign-up">here.</a></p>
+        <p><a href="/password-reset">Forgot password?</a></p>
+        <button type="submit" class="btn btn-success">Login</button>
+    </form>
+{% endblock %}
