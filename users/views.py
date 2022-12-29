@@ -1,16 +1,9 @@
-from django.http import HttpResponseRedirect
-from django.views.generic import CreateView
-from django.contrib.auth import logout
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import LoginView
+from django.shortcuts import render, redirect
 from diet.models import Meal
-
-# user logic for identification
-from django.contrib.auth.models import User
+from .forms import RegisterForm
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import MealSerializer
-from rest_framework import permissions
+from django.contrib.auth import login
 
 @api_view(['GET'])
 def current_user(request):
@@ -18,25 +11,17 @@ def current_user(request):
     if user.is_authenticated:
         # get all the meals associated with that user
         meals = Meal.objects.filter(user=user)
-        print(meals)
         return Response({'username' : user.username})
 
-# @api_view(['GET'])
-# def current_user(request):
-#     queryset = User.objects.all()
-#     serializer_class = MealSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-
-class SignUpView(CreateView):
-    """ Class based signup view """
-    form_class = UserCreationForm
-    success_url = "/users/login"
-    template_name = "registration/signup.html"
-
-class LoginView(LoginView):
-    """ Class based login view """
-
-def log_out(request):
-    """ function based logout view """
-    logout(request)
-    return HttpResponseRedirect("/users/login")
+def sign_up(request):
+    # create an empty form or fill it with data provided by the user and render it
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            # if all fields were filled correctly, redirect the registered user the home page
+            return redirect('/app')
+    else:
+        form = RegisterForm()
+    return render(request, 'registration/signup.html', {"form": form})

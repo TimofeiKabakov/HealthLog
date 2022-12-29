@@ -7,6 +7,7 @@ import TrainingPage from "./pages/TrainingPage";
 
 const App = () => {
   const [userInfo, setUserInfo] = useState({});
+  //# TODO: when to get meals - at what level??
 
   useEffect(() => {
     const getCurrentUser = async (query) => {
