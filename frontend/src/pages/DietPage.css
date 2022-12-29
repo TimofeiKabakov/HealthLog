@@ -1,20 +1,21 @@
 .DietPage {
   flex: 1;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  height: 35%;
-  width: 25%;
-  background-color: aquamarine;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
   border-radius: 20px;
 }
 
 .Cards {
-  display: flex;
-  flex: 1;
-  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  flex-direction: row;
+  background-color: aquamarine;
   height: 100vh;
   width: 100%;
-  padding: 15;
+  padding: 2rem;
   gap: 1rem;
+  flex-wrap: wrap;
 }

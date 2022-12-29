@@ -16,7 +16,6 @@ const App = () => {
       return res;
     };
     setUserInfo(() => getCurrentUser());
-    console.log(userInfo);
   }, []);
 
   return (
