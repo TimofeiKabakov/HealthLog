@@ -12,21 +12,20 @@ from rest_framework.decorators import api_view
 from .serializers import MealSerializer
 from rest_framework import permissions
 
-# @api_view(['GET'])
-# def current_user(request):
-#     user = request.user
-#     serializer_class = MealSerializer
-#     if user.is_authenticated:
-#         # get all the meals associated with that user
-#         meals = Meal.objects.filter(user=user)
-#         print("Hello")
-#         return Response({'meals' : meals})
-
 @api_view(['GET'])
 def current_user(request):
-    queryset = User.objects.all()
-    serializer_class = MealSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    user = request.user
+    if user.is_authenticated:
+        # get all the meals associated with that user
+        meals = Meal.objects.filter(user=user)
+        print(meals)
+        return Response({'username' : user.username})
+
+# @api_view(['GET'])
+# def current_user(request):
+#     queryset = User.objects.all()
+#     serializer_class = MealSerializer
+#     permission_classes = [permissions.IsAuthenticated]
 
 class SignUpView(CreateView):
     """ Class based signup view """
