@@ -24,7 +24,8 @@ const FoodSeachBar = () => {
   return (
     <div>
     <button onClick={() => setIsOpen(true)}>Add meal</button>
-    
+    {isOpen && (
+    <div>
       <form onSubmit={handleSearch}>
         <input type="text" name="query" />
         <button type="submit">Search</button>
@@ -36,6 +37,10 @@ const FoodSeachBar = () => {
           ))}
         </ul>
       )}
+      <button onClick={() => setIsOpen(false)}>Confirm add</button>
+      <button onClick={() => setIsOpen(false)}>Close</button>
+    </div>
+    )}
     </div>
   );
 };
