@@ -1,9 +1,11 @@
 from django.contrib import admin
-from.models import Food
+from .models import Meal, Food
 
 class FoodAdmin(admin.ModelAdmin):
-    list_display = ("title", "calories")
+    list_display = ("name", "calories")
 
-# Register your models here.
+class MealAdmin(admin.ModelAdmin):
+    list_display = ("name", "updated")
 
 admin.site.register(Food, FoodAdmin)
+admin.site.register(Meal, MealAdmin)
