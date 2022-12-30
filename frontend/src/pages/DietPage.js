@@ -1,11 +1,11 @@
 import React from "react";
-import FoodSeachBar from "../components/FoodSeachBar";
+import AddMealModal from "../components/AddMealModal";
 
 const DietPage = () => {
   return (
     <div>
       <h1>This is the home page of the Diet component.</h1>
-      <FoodSeachBar />
+      <AddMealModal />
     </div>
   );
 };
