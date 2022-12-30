@@ -14,10 +14,10 @@ class WorkOutSerializer(serializers.ModelSerializer):
 class MealSeralizer(serializers.ModelSerializer):
     class Meta:
         model = Meal
-        fields = ('id', 'user', 'name', 'updated', 'created')
+        fields = ('user', 'name', 'updated', 'created')
 
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
-        fields = ('id', 'user', 'meal', 'name', 'calories', 'serving_amount', 'serving_unit',
+        fields = ('user', 'meal', 'name', 'calories', 'serving_amount', 'serving_unit',
                   'total_fat', 'carbohydrates', 'protein')
