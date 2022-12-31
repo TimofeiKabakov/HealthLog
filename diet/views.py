@@ -4,4 +4,6 @@ from .models import Food
 
 class FoodView(viewsets.ModelViewSet):
     serializer_class = FoodSerializer
-    queryset = Food.objects.all()
+    def get_queryset(self):
+        user = self.request.user
+        return Food.objects.filter(user=user)
