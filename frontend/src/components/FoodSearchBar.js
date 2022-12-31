@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import FoodListItem from "./FoodListItem";
 
-const FoodSeachBar = () => {
-  const [results, setResults] = useState([]);
+const FoodSearchBar = (props) => {
+  const [results, setResults] = useState(null);
 
+  /* make request to the USDA food database api with given query(food name) */
+  /* return food query results in json format */
   const searchFood = async (query) => {
     const API_ENDPOINT = "https://api.nal.usda.gov/fdc/v1/foods/search";
     const API_KEY = "DgN17Iv5tFj5hYJgwzbHgK7mIPpEFTQqUQEgE3eS";
@@ -25,10 +28,10 @@ const FoodSeachBar = () => {
         <input type="text" name="query" />
         <button type="submit">Search</button>
       </form>
-      {results.totalHits > 0 && (
+      {results != null && (
         <ul>
           {results.foods.map((food) => (
-            <li key={food.fdcId}>{food.description}</li>
+            <FoodListItem key={food.fdcId} food={food} onClick={() => props.onClick(food)} />
           ))}
         </ul>
       )}
@@ -36,4 +39,4 @@ const FoodSeachBar = () => {
   );
 };
 
-export default FoodSeachBar;
+export default FoodSearchBar;

@@ -1,13 +1,11 @@
 import React from "react";
 import FoodSeachBar from "../components/FoodSeachBar";
 import { Card } from "../components/Card/Card";
-import AddMeal from "../components/Card/AddNewCard"
+import AddMeal from "../components/Card/AddNewCard";
 import "./DietPage.css";
 
 const DietPage = (props) => {
-
   const image = require("../assets/food.jpg");
-  
 
   const meals = [
     {
@@ -26,7 +24,7 @@ const DietPage = (props) => {
       date: "May 9",
       img: image,
     },
-    
+
     {
       id: 3,
       username: "timofei",
@@ -34,8 +32,8 @@ const DietPage = (props) => {
       description: "this is meal 3",
       date: "1 Jan",
       img: image,
-    },    
-    
+    },
+
     {
       id: 3,
       username: "timofei",
@@ -43,8 +41,7 @@ const DietPage = (props) => {
       description: "this is meal 3",
       date: "1 Jan",
       img: image,
-    },    
-    
+    },
   ];
 
   return (
@@ -52,14 +49,12 @@ const DietPage = (props) => {
       <h1>Here are your meals:</h1>
       <div className="Cards">
         {meals.map((meal) => (
-            
-              <Card
-                // key={meal.id}
-                name={meal.name}
-                // date={meal.date}
-                image={meal.img}
-            />
-          
+          <Card
+            // key={meal.id}
+            name={meal.name}
+            // date={meal.date}
+            image={meal.img}
+          />
         ))}
       </div>
       <AddMeal />
