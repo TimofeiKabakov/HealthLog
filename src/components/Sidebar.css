@@ -1,0 +1,163 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: 4rem;
+  transition: all 300ms ease;
+  border-top-right-radius: 1rem;
+  background-color: #202443;
+  height: 100%;
+   
+
+}
+/* logo */
+.bars{
+  display: none;
+}
+
+.logo {
+  margin-top: 3.5rem;
+  display: flex;
+  font-weight: bold;
+  font-size: 22px;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  background-color: #252849;
+}
+
+.logo > span {
+  color: white;
+}
+.logo > span > span {
+  color: white;
+}
+.logo > img {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* menu */
+.menu {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 2.5rem;
+  margin-left: 2rem;
+  position: relative;
+  transition: all 300ms ease;
+  /* border-radius: 0.7rem; */
+  font-size: 14px;
+  
+}
+
+.menuItem:hover {
+  cursor: pointer;
+}
+
+.menu .menuItem:last-child {
+  position: absolute;
+  bottom: 2.3rem;
+  width: 100%;
+}
+
+.active {
+  background: #252849;
+  margin-left: 0;
+  padding-left: 1rem;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+/* .active::before {
+  content: "";
+  width: 8px;
+  height: 100%;
+  background: white;
+  margin-right: calc(1rem - 8px);
+} */
+
+.active::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: 20px;
+  height:20px;
+  background-color: #202443;
+  border-radius: 0 0 10px 0;
+  box-shadow: 0 8px 0 0 #252849;
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #202443;
+  border-radius: 0 10px 0 0;
+  box-shadow: 0 -8px 0 0 #252849;
+}
+
+
+
+
+/* Tablets */
+@media screen and (max-width: 1200px) {
+  .menuItem>span{
+    display: none;
+  }
+  .logo{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar{
+    position: fixed;
+    z-index: 9;
+    background: #ffe0e0;
+    width: 55%;
+    padding-right: 1rem;
+    height: 100%;
+  }
+  .menuItem>span{
+    display: block;
+  }
+  .logo{
+    display: flex;
+  }
+  .menu .menuItem:last-child {
+    position: relative;
+    margin-top: 6rem;
+  }
+  .bars{
+    display: flex;
+    position: fixed;
+    top: 2rem;
+    left:60%;
+    background:#ffe0e0;
+    padding:10px;
+    border-radius: 10px;
+    z-index: 9;
+  }
+  .close{
+    left: -60%;
+  }
+}
+

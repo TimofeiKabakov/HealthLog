@@ -1,0 +1,68 @@
+.CompactCard {
+    display: flex;
+    flex: 1 1;
+    height: 11.5rem !important;
+    border-radius: 0.7rem;
+    color: white;
+    padding: 1rem;
+    position: relative;
+    cursor: pointer;
+    flex-direction: column !important;
+}
+
+.CompactCard:hover {
+    box-shadow: none !important;
+  }
+
+.PBContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* ExpandedCard */
+.ExpandedCard {
+    position: absolute;
+    width: 60%;
+    height: 70vh;
+    z-index: 9;
+    left: 13rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+  }
+  .ExpandedCard > span:nth-of-type(1) {
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+    text-shadow: 0px 0px 15px white;
+  }
+  .ExpandedCard > span:nth-of-type(2) {
+    color: rgb(236, 236, 236);
+    font-size: 15px;
+  }
+  
+  .chartContainer {
+    width: 70%;
+  }
+  
+  @media screen and (max-width: 1200px) {
+    .ExpandedCard {
+      top: 2rem;
+      height: 45vh;
+      left: 6rem;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .ExpandedCard {
+      top: 8rem;
+      height: 50%;
+      left: 25px;
+      width: 80%;
+    }
+  }
+  

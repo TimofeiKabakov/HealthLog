@@ -1,0 +1,21 @@
+.CompactCard {
+    display: flex;
+    flex: 1 1;
+    height: 11.5rem !important;
+    border-radius: 0.7rem;
+    color: white;
+    padding: 1rem;
+    position: relative;
+    cursor: pointer;
+    flex-direction: column !important;
+}
+
+.CompactCard:hover {
+    box-shadow: none !important;
+  }
+
+.PBContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
