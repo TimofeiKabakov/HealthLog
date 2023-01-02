@@ -23,6 +23,7 @@ from diet import views
 
 router = routers.DefaultRouter()
 router.register("foods", views.FoodView, "food")
+router.register("meals", views.MealView, "meal")
 
 urlpatterns = [
     path("admin/", admin.site.urls),

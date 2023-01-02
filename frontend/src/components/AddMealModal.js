@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import FoodCart from "./FoodCart";
 import FoodDetail from "./FoodDetail";
@@ -10,6 +10,14 @@ const AddMealModal = () => {
   const [currentFood, setCurrentFood] = useState();
   const [meal, setMeal] = useState([]);
 
+  // get CSRF token from cookie
+  const [csrfToken, setCsrfToken] = useState();
+  useEffect(() => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${"csrftoken"}=`);
+    if (parts.length === 2) setCsrfToken(parts.pop().split(";").shift());
+  }, []);
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -19,23 +27,32 @@ const AddMealModal = () => {
   };
 
   // TODO: better name & logic
-  const handleChildClick = (food) => {
+  const handleChooseFood = (food) => {
     console.log(food);
     const foodInfo = {
       name: food.description,
       id: food.fdcId,
-      servingSize: food.servingSize,
-      servingSizeUnit: food.servingSizeUnit,
-      calories: food.foodNutrients.find((e) => e.nutrientId === 1008).value,
-      carb: food.foodNutrients.find((e) => e.nutrientId === 1005).value,
-      protein: food.foodNutrients.find((e) => e.nutrientId === 1003).value,
-      fat: food.foodNutrients.find((e) => e.nutrientId === 1004).value,
+      serving_size: parseInt(food.servingSize),
+      serving_size_unit: food.servingSizeUnit,
+      calories: parseInt(food.foodNutrients.find((e) => e.nutrientId === 1008).value),
+      carbohydrates: parseInt(food.foodNutrients.find((e) => e.nutrientId === 1005)
+        .value),
+      protein: parseInt(food.foodNutrients.find((e) => e.nutrientId === 1003).value),
+      total_fat: parseInt(food.foodNutrients.find((e) => e.nutrientId === 1004).value),
+      amount: parseInt(1),
     };
     setCurrentFood(foodInfo);
     console.log(foodInfo);
+    fetch("http://127.0.0.1:8000/api/foods/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken,
+      },
+      body: JSON.stringify({...foodInfo, 'meal': parseInt(1)}),
+    });
   };
 
-  // TODO: fix bug(?): need to click twice to log the food
   const handleAddCurrentFood = (amount) => {
     const foodAlreadyInMeal = meal.some((e) => e.info.id === currentFood.id);
     if (foodAlreadyInMeal) {
@@ -61,7 +78,7 @@ const AddMealModal = () => {
       console.log(meal);
       closeModal();
     }
-  }
+  };
 
   return (
     <div>
@@ -72,9 +89,12 @@ const AddMealModal = () => {
         contentLabel="Add Meal"
       >
         <button onClick={closeModal}>close</button>
-        <FoodSearchBar onClick={(food) => handleChildClick(food)} />
-        <FoodDetail foodInfo={currentFood} onClick={(amount) => handleAddCurrentFood(amount)} />
-        <FoodCart meal={meal} handleAddMeal={() => handleAddMeal}/>
+        <FoodSearchBar onClick={(food) => handleChooseFood(food)} />
+        <FoodDetail
+          foodInfo={currentFood}
+          onClick={(amount) => handleAddCurrentFood(amount)}
+        />
+        <FoodCart meal={meal} handleAddMeal={() => handleAddMeal()} />
       </Modal>
     </div>
   );

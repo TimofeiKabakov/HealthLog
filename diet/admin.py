@@ -5,7 +5,7 @@ class FoodAdmin(admin.ModelAdmin):
     list_display = ("name", "calories")
 
 class MealAdmin(admin.ModelAdmin):
-    list_display = ("name", "updated")
+    list_display = ("name", "updated_at")
 
 # Register your models here.
 

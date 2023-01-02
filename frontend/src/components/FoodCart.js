@@ -10,7 +10,7 @@ const FoodCart = (props) => {
 					))}
 				</ul>
 			)}
-			<button onClick={props.handleAddMeal()}>Add Meal</button>
+			<button onClick={() => props.handleAddMeal()}>Add Meal</button>
     </div>
   )
 }
