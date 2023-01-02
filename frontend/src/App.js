@@ -7,10 +7,11 @@ import TrainingPage from "./pages/TrainingPage";
 
 const App = () => {
   const [userMeals, setUserMeals] = useState();
-  //# TODO: when to get meals - at what level??
+  //TODO: when to get meals - at what level
 
   async function getMealsFetch() {
-    const response = await fetch("/current");
+    //TODO: error handling
+    const response = await fetch("/meals");
     const res = await response.json();
     return res;
   }

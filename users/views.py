@@ -7,7 +7,7 @@ from django.contrib.auth import login
 from .serializers import MealSerializer
 
 @api_view(['GET'])
-def current_user(request):
+def current_meals(request):
     user = request.user
     if user.is_authenticated:
         # get all the meals associated with that user
