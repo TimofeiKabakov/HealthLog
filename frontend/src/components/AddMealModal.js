@@ -2,21 +2,27 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import FoodCart from "./FoodCart";
 import FoodDetail from "./FoodDetail";
+import FoodList from "./FoodList";
 import FoodSearchBar from "./FoodSearchBar";
 
 const AddMealModal = () => {
-  // TODO: these can have better names
   const [modalIsOpen, setIsOpen] = useState();
+  const [searchResults, setSearchResults] = useState();
   const [currentFood, setCurrentFood] = useState();
   const [meal, setMeal] = useState([]);
 
-  // get CSRF token from cookie
+  // get CSRF token from cookie... probably not good practise
+  // also pull this up in the end
   const [csrfToken, setCsrfToken] = useState();
   useEffect(() => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${"csrftoken"}=`);
     if (parts.length === 2) setCsrfToken(parts.pop().split(";").shift());
   }, []);
+
+  useEffect(() => {
+    console.log(meal);
+  }, [meal]);
 
   const openModal = () => {
     setIsOpen(true);
@@ -26,56 +32,103 @@ const AddMealModal = () => {
     setIsOpen(false);
   };
 
-  // TODO: better name & logic
-  const handleChooseFood = (food) => {
-    console.log(food);
-    const foodInfo = {
-      name: food.description,
-      id: food.fdcId,
-      serving_size: parseInt(food.servingSize),
-      serving_size_unit: food.servingSizeUnit,
-      calories: parseInt(food.foodNutrients.find((e) => e.nutrientId === 1008).value),
-      carbohydrates: parseInt(food.foodNutrients.find((e) => e.nutrientId === 1005)
-        .value),
-      protein: parseInt(food.foodNutrients.find((e) => e.nutrientId === 1003).value),
-      total_fat: parseInt(food.foodNutrients.find((e) => e.nutrientId === 1004).value),
-      amount: parseInt(1),
-    };
-    setCurrentFood(foodInfo);
-    console.log(foodInfo);
+  const searchFood = async (query) => {
+    const API_ENDPOINT = "https://api.nal.usda.gov/fdc/v1/foods/search";
+    const API_KEY = "DgN17Iv5tFj5hYJgwzbHgK7mIPpEFTQqUQEgE3eS";
+
+    const url = `${API_ENDPOINT}?api_key=${API_KEY}&query=${query}`;
+
+    const response = await fetch(url);
+    return await response.json();
+  };
+
+  const addMeal = async (name) => {
+    const response = await fetch("http://127.0.0.1:8000/api/meals/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken,
+      },
+      body: JSON.stringify({ name: name }),
+    });
+    return await response.json().id;
+  };
+
+  const addFood = async (mealId, food) => {
     fetch("http://127.0.0.1:8000/api/foods/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "X-CSRFToken": csrfToken,
       },
-      body: JSON.stringify({...foodInfo, 'meal': parseInt(1)}),
+      body: JSON.stringify({ ...food, meal: mealId }),
     });
   };
 
+  const handleSearchFood = (event) => {
+    event.preventDefault();
+    const query = event.target.elements.query.value;
+    searchFood(query).then((results) => setSearchResults(results));
+    console.log(searchResults);
+  };
+
+  const handleChooseFood = (rawFoodData) => {
+    // testing
+    console.log(rawFoodData);
+    const food = {
+      name: rawFoodData.description,
+      id: rawFoodData.fdcId,
+      serving_size: parseInt(rawFoodData.servingSize),
+      serving_size_unit: rawFoodData.servingSizeUnit,
+      calories: parseInt(
+        rawFoodData.foodNutrients.find((e) => e.nutrientId === 1008).value
+      ),
+      carbohydrates: parseInt(
+        rawFoodData.foodNutrients.find((e) => e.nutrientId === 1005).value
+      ),
+      protein: parseInt(
+        rawFoodData.foodNutrients.find((e) => e.nutrientId === 1003).value
+      ),
+      total_fat: parseInt(
+        rawFoodData.foodNutrients.find((e) => e.nutrientId === 1004).value
+      ),
+      amount: parseInt(0),
+    };
+    if (isNaN(food.serving_size)) {
+      food.serving_size = 1;
+    }
+    if (food.serving_size_unit === undefined) {
+      food.serving_size_unit = "";
+    }
+    setCurrentFood(food);
+    // testing
+    console.log(food);
+  };
+
   const handleAddCurrentFood = (amount) => {
-    const foodAlreadyInMeal = meal.some((e) => e.info.id === currentFood.id);
+    const foodAlreadyInMeal = meal.some((e) => e.id === currentFood.id);
     if (foodAlreadyInMeal) {
       setMeal(
         meal.map((food) => {
-          if (food.info.id === currentFood.id) {
-            return { info: food.info, amount: food.amount + amount };
+          if (food.id === currentFood.id) {
+            return { ...food, amount: food.amount + amount };
           }
           return food;
         })
       );
     } else {
-      setMeal(meal.concat({ info: currentFood, amount: amount }));
+      setMeal(meal.concat({ ...currentFood, amount: amount }));
     }
-    // for testing
-    console.log(meal);
   };
 
   const handleAddMeal = () => {
     if (meal.length === 0) {
       console.log("There is not food yet");
     } else {
-      console.log(meal);
+      addMeal("default_meal_name").then((mealId) => {
+        // TODO
+        console.log(mealId);
+      });
       closeModal();
     }
   };
@@ -89,12 +142,16 @@ const AddMealModal = () => {
         contentLabel="Add Meal"
       >
         <button onClick={closeModal}>close</button>
-        <FoodSearchBar onClick={(food) => handleChooseFood(food)} />
-        <FoodDetail
-          foodInfo={currentFood}
-          onClick={(amount) => handleAddCurrentFood(amount)}
+        <FoodSearchBar
+          onClick={handleChooseFood}
+          handleSearchFood={handleSearchFood}
         />
-        <FoodCart meal={meal} handleAddMeal={() => handleAddMeal()} />
+        <FoodList
+          searchResults={searchResults}
+          handleChooseFood={handleChooseFood}
+        />
+        <FoodDetail foodInfo={currentFood} onClick={handleAddCurrentFood} />
+        <FoodCart meal={meal} handleAddMeal={handleAddMeal} />
       </Modal>
     </div>
   );

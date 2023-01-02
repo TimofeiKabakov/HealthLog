@@ -13,7 +13,7 @@ const FoodDetail = (props) => {
       <div>
         <ul>
           <li>Food Name: {props.foodInfo.name}</li>
-          <li>Serving Size: {props.foodInfo.servingSize}{props.foodInfo.serving_size_unit} per Serving</li>
+          <li>Serving Size: {props.foodInfo.serving_size}{props.foodInfo.serving_size_unit} per Serving</li>
           <li>Calories per Serving: {props.foodInfo.calories}</li>
           <li>Carbonhydrate per Serving: {props.foodInfo.carbohydrates}</li>
           <li>Protein per Serving: {props.foodInfo.protein}</li>
