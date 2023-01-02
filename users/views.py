@@ -4,7 +4,6 @@ from .forms import RegisterForm
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import login
-from django.core import serializers
 from .serializers import MealSerializer
 
 @api_view(['GET'])
@@ -15,7 +14,6 @@ def current_user(request):
         queryset = Meal.objects.filter(user = user)
         serializer = MealSerializer(queryset, many = True)
         return Response(serializer.data)
-
 
 def sign_up(request):
     # create an empty form or fill it with data provided by the user and render it

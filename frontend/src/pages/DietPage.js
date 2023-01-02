@@ -8,7 +8,6 @@ const DietPage = (props) => {
 
   return (
     <div className="DietPage">
-      {console.log(props.meals)}
       <h1>Here are your meals:</h1>
       <div className="Cards">
         {props.meals.map((meal) => (
