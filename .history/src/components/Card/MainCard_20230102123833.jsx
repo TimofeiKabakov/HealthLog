@@ -1,7 +1,7 @@
 import React from 'react';
 import CaloriesCard from './CaloriesCard/CaloriesCard';
 import MacrosCard from './MacrosCard/MacrosCard';
-import NutritionCard from './NutrtionCard/NutritionCard';
+import NutritionCard from './HeartHealthyCard/NutritionCard';
 import DashboardCard from './DashboardCard/DashboardCard';
 
 const cardMap = {

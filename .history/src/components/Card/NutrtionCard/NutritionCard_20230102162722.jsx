@@ -4,11 +4,13 @@ import "react-circular-progressbar/dist/styles.css";
 import { motion, AnimateSharedLayout } from "framer-motion";
 import { UilTimes } from "@iconscout/react-unicons";
 import Chart from "react-apexcharts";
-import MacrosCardCSS from "./MacrosCard.module.scss";
+import NutritionCardCSS from "./NutritionCard.module.scss";
+import ProgressBar from 'react-animated-progress-bar';
+
 
 // parent Card
 
-const CaloriesCard = (props) => {
+const NutritionCard = (props) => {
   const [expanded, setExpanded] = useState(false);
   return (
     <AnimateSharedLayout>
@@ -23,9 +25,11 @@ const CaloriesCard = (props) => {
 
 // Compact Card
 function CompactCard({ param, setExpanded }) {
+    const now = 60;
+
   return (
     <motion.div
-      className={MacrosCardCSS.CompactCard}
+      className={NutritionCardCSS.CompactCard}
       style={{
         background:  "linear-gradient(180deg, #252849 0%, #2e325c 100%)",
         boxShadow: "0px 10px 20px 0px #2e325c",
@@ -33,40 +37,50 @@ function CompactCard({ param, setExpanded }) {
       layoutId="expandableCard"
       onClick={setExpanded}
     >
-      <span style={{fontSize: 16, fontWeight: "bold"}}>{param.title}</span>
-      <div className={MacrosCardCSS.Container}>
+                <span style={{fontSize: 16, fontWeight: "bold"}}>{param.title}</span>
+        <div className={NutritionCardCSS.PBContainer}>
+            <span>Fat</span>
+    <ProgressBar
+        width="100%"
+        height="5px"
+        rect
+        fontColor="gray"
+        percentage="70"
+        rectPadding="1px"
+        rectBorderRadius="20px"
+        trackPathColor="transparent"
+        bgColor="#333333"
+        trackBorderColor="grey"
+      />
+        <span>Sodium</span>
 
-        <div className={MacrosCardCSS.radialBar}>
-            <span font-size="2px">Carbs</span>
-            <CircularProgressbar
-            className={MacrosCardCSS.CircularProgressbar}
-            value={param.barValue}
-            text={`${param.barValue}%`}
-            />
-            <span>0</span>
+    <ProgressBar
+        width="100%"
+        height="7px"
+        rect
+        fontColor="gray"
+        percentage="70"
+        rectPadding="1px"
+        rectBorderRadius="20px"
+        trackPathColor="transparent"
+        bgColor="#333333"
+        trackBorderColor="grey"
+      />
+            <span>Sugar</span>
 
+    <ProgressBar
+        width="100%"
+        height="7px"
+        rect
+        fontColor="gray"
+        percentage="70"
+        rectPadding="1px"
+        rectBorderRadius="20px"
+        trackPathColor="transparent"
+        bgColor="#333333"
+        trackBorderColor="grey"
+      />
         </div>
-        <div className={MacrosCardCSS.radialBar}>
-            <span font-size="2px">Fat</span>
-            <CircularProgressbar
-            className={MacrosCardCSS.CircularProgressbar}
-            value={param.barValue}
-            text={`${param.barValue}%`}
-            />
-            <span>0</span>
-
-        </div>
-        <div className={MacrosCardCSS.radialBar}>
-            <span font-size="2px">Protein</span>
-            <CircularProgressbar
-            className={MacrosCardCSS.CircularProgressbar}
-            value={param.barValue}
-            text={`${param.barValue}%`}
-            />
-            <span>0</span>
-        </div>
-
-    </div>
     </motion.div>
   );
 }
@@ -126,7 +140,7 @@ function ExpandedCard({ param, setExpanded }) {
 
   return (
     <motion.div
-      className={MacrosCardCSS.ExpandedCard}
+      className={NutritionCardCSS.ExpandedCard}
       style={{
         background: param.color.backGround,
         boxShadow: param.color.boxShadow,
@@ -137,7 +151,7 @@ function ExpandedCard({ param, setExpanded }) {
         <UilTimes onClick={setExpanded} />
       </div>
         <span>{param.title}</span>
-      <div className={MacrosCardCSS.chartContainer}>
+      <div className={NutritionCardCSS.chartContainer}>
         <Chart options={data.options} series={param.series} type="area" />
       </div>
       <span>Last 24 hours</span>
@@ -145,4 +159,4 @@ function ExpandedCard({ param, setExpanded }) {
   );
 }
 
-export default CaloriesCard;
+export default NutritionCard;
