@@ -11,12 +11,15 @@ const App = () => {
 
   useEffect(() => {
     const getCurrentUser = async (query) => {
-      const response = await fetch("/users/current");
+      const response = await fetch("/current");
       const res = await response.json();
-      console.log(res);
       return res;
     };
-    setUserInfo(() => getCurrentUser());
+    setUserInfo(() =>
+      getCurrentUser().then((res) => {
+        res;
+      })
+    );
   }, []);
 
   return (
@@ -24,12 +27,7 @@ const App = () => {
       <div>
         <Header />
         <Routes>
-          <Route
-            path="/diet"
-            element={
-              <DietPage username={userInfo.username} meals={userInfo.meals} />
-            }
-          />
+          <Route path="/diet" element={<DietPage meals={userInfo} />} />
           <Route path="/training" element={<TrainingPage />} />
         </Routes>
       </div>

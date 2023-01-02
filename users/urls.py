@@ -11,6 +11,7 @@ urlpatterns = [
     path('', auth_views.LoginView.as_view()),
     path('sign-up', views.sign_up, name='sign_up'),
     path('app', login_required(TemplateView.as_view(template_name="index.html"), login_url='/login'), name="app"),
+    path("current", views.current_user, name="current_user"),
 
     # urls for password reset part of authentication
     # documentation: https://docs.djangoproject.com/en/3.2/topics/auth/default/
