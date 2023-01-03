@@ -6,30 +6,12 @@ import TrainingPage from "./pages/TrainingPage";
 import Dashboard from "./pages/Dashboard";
 
 const App = () => {
-  const [userMeals, setUserMeals] = useState();
-  //TODO: when to get meals - at what level
-
-  async function getMealsFetch() {
-    //TODO: error handling
-    const response = await fetch("/meals");
-    const res = await response.json();
-    return res;
-  }
-
-  useEffect(() => {
-    async function getMeals() {
-      const meals = await getMealsFetch();
-      setUserMeals(() => meals);
-    }
-    getMeals();
-  }, []);
-
   return (
     <Router>
       <div>
         <Routes>
           <Route path="/home" element={<Dashboard />} />
-          <Route path="/diet" element={<DietPage meals={userMeals} />} />
+          <Route path="/diet" element={<DietPage />} />
           <Route path="/training" element={<TrainingPage />} />
         </Routes>
       </div>

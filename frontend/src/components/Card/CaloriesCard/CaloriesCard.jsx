@@ -4,10 +4,11 @@ import "react-circular-progressbar/dist/styles.css";
 import { motion, AnimateSharedLayout } from "framer-motion";
 import { UilTimes } from "@iconscout/react-unicons";
 import Chart from "react-apexcharts";
-import { CgFlagAlt } from 'react-icons/cg';
-import { GiForkKnifeSpoon } from 'react-icons/gi';
-import { RiFireFill } from 'react-icons/ri';
+import { CgFlagAlt } from "react-icons/cg";
+import { GiForkKnifeSpoon } from "react-icons/gi";
+import { RiFireFill } from "react-icons/ri";
 import CaloriesCardCSS from "./CaloriesCard.module.scss";
+import "../GlobalCardStyle.css";
 
 // parent Card
 
@@ -30,46 +31,46 @@ function CompactCard({ param, setExpanded }) {
     <motion.div
       className={CaloriesCardCSS.CompactCard}
       style={{
-        background:  "linear-gradient(180deg, #252849 0%, #2e325c 100%)",
+        background: "linear-gradient(180deg, #252849 0%, #2e325c 100%)",
         boxShadow: "0px 10px 20px 0px #2e325c",
       }}
       layoutId="expandableCard"
       onClick={setExpanded}
     >
-      <span style={{fontSize: 16, fontWeight: "bold"}}>{param.title}</span>
+      <span style={{ fontSize: 16, fontWeight: "bold" }}>{param.title}</span>
       <div className={CaloriesCardCSS.Container}>
-      <div className={CaloriesCardCSS.radialBar}>
-        <CircularProgressbar
-          className={CaloriesCardCSS.CircularProgressbar}
-          value={param.barValue}
-          text={`${param.barValue}%`}
-        />
-      </div>
+        <div className={CaloriesCardCSS.radialBar}>
+          <CircularProgressbar
+            className={CaloriesCardCSS.CircularProgressbar}
+            value={param.barValue}
+            text={`${param.barValue}%`}
+          />
+        </div>
 
-      <div className={CaloriesCardCSS.detail}>
-        <div className={CaloriesCardCSS.detailContainer}>
-            <CgFlagAlt fontSize="24px"/>
+        <div className={CaloriesCardCSS.detail}>
+          <div className={CaloriesCardCSS.detailContainer}>
+            <CgFlagAlt fontSize="24px" />
             <div className={CaloriesCardCSS.detailInfo}>
-                <span>Base Goal</span>
-                <span>0</span>
-            </div >
-        </div>
-        <div className={CaloriesCardCSS.detailContainer}>
-            <GiForkKnifeSpoon fontSize="24px"/>
+              <span>Base Goal</span>
+              <span>0</span>
+            </div>
+          </div>
+          <div className={CaloriesCardCSS.detailContainer}>
+            <GiForkKnifeSpoon fontSize="24px" />
             <div className={CaloriesCardCSS.detailInfo}>
-                <span>Food</span>
-                <span>0</span>
-            </div >
-        </div>
-        <div className={CaloriesCardCSS.detailContainer}>
-            <RiFireFill fontSize="24px"/>
+              <span>Food</span>
+              <span>0</span>
+            </div>
+          </div>
+          <div className={CaloriesCardCSS.detailContainer}>
+            <RiFireFill fontSize="24px" />
             <div className={CaloriesCardCSS.detailInfo}>
-                <span>Exercise</span>
-                <span>0</span>
-            </div >
+              <span>Exercise</span>
+              <span>0</span>
+            </div>
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
     </motion.div>
   );
 }
@@ -139,7 +140,7 @@ function ExpandedCard({ param, setExpanded }) {
       <div style={{ alignSelf: "flex-end", cursor: "pointer", color: "white" }}>
         <UilTimes onClick={setExpanded} />
       </div>
-        <span>{param.title}</span>
+      <span>{param.title}</span>
       <div className={CaloriesCardCSS.chartContainer}>
         <Chart options={data.options} series={param.series} type="area" />
       </div>

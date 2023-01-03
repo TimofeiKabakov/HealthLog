@@ -58,10 +58,10 @@ const Sidebar = (props) => {
             );
           })}
           {/* signoutIcon */}
-          <Link to={"/logout"} className={SidebarCSS.menuItem}>
+          <a href="/logout" className={SidebarCSS.menuItem}>
             <UilSignOutAlt style={{ color: "white" }} />
             <span style={{ color: "white" }}>Logout</span>
-          </Link>
+          </a>
         </div>
       </motion.div>
     </div>
