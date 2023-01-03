@@ -51,7 +51,7 @@ const AddMealModal = () => {
       },
       body: JSON.stringify({ name: name }),
     });
-    return await response.json().id;
+    return await response.json();
   };
 
   const addFood = async (mealId, food) => {
@@ -98,7 +98,7 @@ const AddMealModal = () => {
       food.serving_size = 1;
     }
     if (food.serving_size_unit === undefined) {
-      food.serving_size_unit = "";
+      food.serving_size_unit = "N/A";
     }
     setCurrentFood(food);
     // testing
@@ -125,9 +125,12 @@ const AddMealModal = () => {
     if (meal.length === 0) {
       console.log("There is not food yet");
     } else {
-      addMeal("default_meal_name").then((mealId) => {
+      addMeal("default_meal_name").then((response) => {
         // TODO
-        console.log(mealId);
+        let mealId = response.id;
+        for (let i = 0; i < meal.length; i++) {
+          addFood(mealId, meal[i]);
+        }
       });
       closeModal();
     }
