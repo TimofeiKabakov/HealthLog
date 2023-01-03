@@ -10,7 +10,7 @@ from .forms import SignupForm
 class SignUpView(CreateView):
     """ Class based signup view """
     form_class = SignupForm
-    success_url = "/users/login"
+    success_url = "/login"
     template_name = "registration/signup.html"
 
 def log_out(request):

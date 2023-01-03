@@ -19,7 +19,8 @@ class MealSeralizer(serializers.ModelSerializer):
         fields = ('id', 'name', 'created_at')
     
     def create(self, validated_data):
-        return Meal.objects.create(**validated_data, user=self.context['request'].user)
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)
 
 class FoodSerializer(serializers.ModelSerializer):
     meal = serializers.PrimaryKeyRelatedField(queryset=Meal.objects.all()) # should be user specific here
