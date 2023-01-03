@@ -11,9 +11,9 @@ urlpatterns = [
     path('', auth_views.LoginView.as_view()),
     path('sign-up', views.sign_up, name='sign_up'),
     
-    path('app', login_required(TemplateView.as_view(template_name="index.html"), login_url='/login'), name="app"),
-    path('diet', login_required(TemplateView.as_view(template_name="index.html"), login_url='/login'), name="app"),
-    path('training', login_required(TemplateView.as_view(template_name="index.html"), login_url='/login'), name="app"),
+    path('home', login_required(TemplateView.as_view(template_name="index.html"), login_url='/login'), name="home"),
+    path('diet', login_required(TemplateView.as_view(template_name="index.html"), login_url='/login'), name="diet"),
+    path('training', login_required(TemplateView.as_view(template_name="index.html"), login_url='/login'), name="training"),
 
     path('meals', views.current_meals, name="current_meals"),
 

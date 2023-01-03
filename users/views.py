@@ -4,7 +4,7 @@ from .forms import RegisterForm
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import login
-from .serializers import MealSerializer
+from diet.serializers import MealSerializer
 
 @api_view(['GET'])
 def current_meals(request):
@@ -23,7 +23,7 @@ def sign_up(request):
             user = form.save()
             login(request, user)
             # if all fields were filled correctly, redirect the registered user the home page
-            return redirect('/app')
+            return redirect('/home')
     else:
         form = RegisterForm()
     return render(request, 'registration/signup.html', {"form": form})

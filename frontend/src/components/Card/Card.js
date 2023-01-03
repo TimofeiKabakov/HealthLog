@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { AnimateSharedLayout, motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import CardInCardCSS from "./CardInCard.module.scss";
 
 // import { CircularProgressbar } from 'react-circular-progressbar';
 // import 'react-circular-progressbar/dist/styles.css';
-import "./Card.css";
 import { UilTimes } from "@iconscout/react-unicons";
 
 export const Card = (props) => {
@@ -26,7 +26,7 @@ export const Card = (props) => {
 function CompactCard({ param, setExpanded }) {
   return (
     <motion.div
-      className="CompactCard"
+      className={CardInCardCSS.CompactCard}
       onClick={() => {
         console.log("papa");
       }}
@@ -41,7 +41,7 @@ function CompactCard({ param, setExpanded }) {
           aspectRatio: 1,
         }}
       />
-      <div className="containerInfo">
+      <div className={CardInCardCSS.containerInfo}>
         <div style={{ color: "black", fontWeight: "bold", opacity: 1 }}>
           {param.name}
           {/* <div>{props.description}</div> */}
@@ -107,13 +107,13 @@ function ExpandedCard({ param, setExpanded }) {
         background: param.color.backGround,
         boxShadow: param.color.boxShadow,
       }}
-      layoutId="exppandableCard"
+      layoutId="expandableCard"
     >
       <div style={{ alignSelf: "flex-end", cursor: "pointer", color: "white" }}>
         <UilTimes onClick={setExpanded} />
       </div>
       <span>{param.title}</span>
-      <div className="chartContainer"></div>
+      <div className={CardInCardCSS.chartContainer}></div>
       <span>Last 24 hours</span>
       <span>Last 24 hours</span>
     </motion.div>

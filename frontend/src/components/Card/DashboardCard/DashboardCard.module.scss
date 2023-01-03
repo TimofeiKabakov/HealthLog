@@ -1,0 +1,31 @@
+.DashboardCard {
+    display: flex;
+    flex: 1;
+    height: 18rem !important;
+    border-radius: 0.7rem;
+    color: white;
+    position: relative;
+    cursor: pointer;
+    flex-direction: column !important;
+    align-items: center;
+}
+
+.DashboardCard:hover {
+    box-shadow: none !important;
+}
+
+.Image {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    height: auto;
+    background-color: white;
+    border-radius: 0.7rem;
+    flex: 0.7;
+}
+
+.detail {
+    display: flex;
+    align-items: center;
+    flex: 0.3;
+}
