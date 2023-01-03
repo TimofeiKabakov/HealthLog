@@ -7,7 +7,5 @@ class FoodAdmin(admin.ModelAdmin):
 class MealAdmin(admin.ModelAdmin):
     list_display = ("name", "updated_at")
 
-# Register your models here.
-
 admin.site.register(Food, FoodAdmin)
 admin.site.register(Meal, MealAdmin)

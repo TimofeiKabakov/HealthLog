@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from diet import views
@@ -27,7 +28,14 @@ router.register("meals", views.MealView, "meal")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+
     path("api/", include(router.urls)),
-    path("users/", include("users.urls")),
-    path("", login_required(TemplateView.as_view(template_name="index.html"), login_url="users:login")),
+    # so it's login/, logout/ etc instead of users/login/ and users/logout/
+    path("", include("users.urls")),
+
+    # index.html is the development build of the react app in frontend/
+    path("", RedirectView.as_view(url="/home/")),
+    path("home/", login_required(TemplateView.as_view(template_name="index.html"), login_url="users:login")),
+    path("diet/", login_required(TemplateView.as_view(template_name="index.html"), login_url="users:login")),
+    path("training/", login_required(TemplateView.as_view(template_name="index.html"), login_url="users:login")),
 ]
