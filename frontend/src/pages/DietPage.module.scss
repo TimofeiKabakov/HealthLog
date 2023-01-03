@@ -1,0 +1,42 @@
+.DietPage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.Cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+  padding: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.Dashboard {
+  /* padding: 0.5rem 3.5rem; */
+  color: white;
+  background: #202443;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+}
+
+.DashboardGlass {
+  display: grid;
+  height: 97%;
+  width: 97%;
+  background: #252849;
+  border-radius: 2rem;
+  gap: 16px;
+  grid-template-columns: 11rem auto 20rem;
+  overflow: hidden;
+}

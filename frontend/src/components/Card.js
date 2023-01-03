@@ -1,9 +1,9 @@
 import React from "react";
-import "./Card.css";
+import CardOutCardCSS from "./CardOutCard.module.css";
 
 export const Card = (props) => {
   return (
-    <div className="CompactCard">
+    <div className={CardOutCardCSS.CompactCard}>
       <img
         src={`${props.image}`}
         style={{
