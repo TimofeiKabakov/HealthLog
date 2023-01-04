@@ -132,6 +132,9 @@ const AddMealModal = () => {
           addFood(mealId, meal[i]);
         }
       });
+      setSearchResults();
+      setCurrentFood();
+      setMeal([]);
       closeModal();
     }
   };
