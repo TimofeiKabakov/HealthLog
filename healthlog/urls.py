@@ -35,7 +35,7 @@ urlpatterns = [
 
     # index.html is the development build of the react app in frontend/
     path("", RedirectView.as_view(url="/home/")),
-    path("home/", login_required(TemplateView.as_view(template_name="index.html"), login_url="users:login")),
-    path("diet/", login_required(TemplateView.as_view(template_name="index.html"), login_url="users:login")),
-    path("training/", login_required(TemplateView.as_view(template_name="index.html"), login_url="users:login")),
+    path("home/", login_required(TemplateView.as_view(template_name="index.html"), login_url="login")),
+    path("diet/", login_required(TemplateView.as_view(template_name="index.html"), login_url="login")),
+    path("training/", login_required(TemplateView.as_view(template_name="index.html"), login_url="login")),
 ]

@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 const FoodCart = (props) => {
+  const [mealName, setMealName] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    props.handleAddMeal(mealName);
+  }
+
   return (
     <div>
       {props.meal.length > 0 && (
@@ -12,7 +19,10 @@ const FoodCart = (props) => {
           ))}
         </ul>
       )}
-      <button onClick={props.handleAddMeal}>Add Meal</button>
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="Meal Name" value={mealName} onChange={(e) => setMealName(e.target.value)}/>
+        <input type="submit" value="submit"/>
+      </form>
     </div>
   );
 };

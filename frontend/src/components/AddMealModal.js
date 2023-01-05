@@ -5,20 +5,11 @@ import FoodDetail from "./FoodDetail";
 import FoodList from "./FoodList";
 import FoodSearchBar from "./FoodSearchBar";
 
-const AddMealModal = () => {
+const AddMealModal = (props) => {
   const [modalIsOpen, setIsOpen] = useState();
   const [searchResults, setSearchResults] = useState();
   const [currentFood, setCurrentFood] = useState();
   const [meal, setMeal] = useState([]);
-
-  // get CSRF token from cookie... probably not good practise
-  // also pull this up in the end
-  const [csrfToken, setCsrfToken] = useState();
-  useEffect(() => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${"csrftoken"}=`);
-    if (parts.length === 2) setCsrfToken(parts.pop().split(";").shift());
-  }, []);
 
   useEffect(() => {
     console.log(meal);
@@ -47,7 +38,7 @@ const AddMealModal = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRFToken": csrfToken,
+        "X-CSRFToken": props.csrfToken,
       },
       body: JSON.stringify({ name: name }),
     });
@@ -59,7 +50,7 @@ const AddMealModal = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRFToken": csrfToken,
+        "X-CSRFToken": props.csrfToken,
       },
       body: JSON.stringify({ ...food, meal: mealId }),
     });
@@ -72,34 +63,30 @@ const AddMealModal = () => {
     console.log(searchResults);
   };
 
-  const handleChooseFood = (rawFoodData) => {
+  const handleChooseFood = (data) => {
     // testing
-    console.log(rawFoodData);
+    console.log(data);
+    const serving_size = data.servingSize;
+    const serving_size_unit = data.servingSizeUnit;
+    const calories = data.foodNutrients.find((e) => e.nutrientId === 1008);
+    const carbohydrates = data.foodNutrients.find((e) => e.nutrientId === 1005);
+    const protein = data.foodNutrients.find((e) => e.nutrientId === 1003);
+    const total_fat = data.foodNutrients.find((e) => e.nutrientId === 1004);
+
     const food = {
-      name: rawFoodData.description,
-      id: rawFoodData.fdcId,
-      serving_size: parseInt(rawFoodData.servingSize),
-      serving_size_unit: rawFoodData.servingSizeUnit,
-      calories: parseInt(
-        rawFoodData.foodNutrients.find((e) => e.nutrientId === 1008).value
-      ),
-      carbohydrates: parseInt(
-        rawFoodData.foodNutrients.find((e) => e.nutrientId === 1005).value
-      ),
-      protein: parseInt(
-        rawFoodData.foodNutrients.find((e) => e.nutrientId === 1003).value
-      ),
-      total_fat: parseInt(
-        rawFoodData.foodNutrients.find((e) => e.nutrientId === 1004).value
-      ),
+      name: data.description,
+      id: data.fdcId,
+      serving_size: serving_size === undefined ? 1 : serving_size,
+      serving_size_unit:
+        serving_size_unit === undefined ? "N/A" : serving_size_unit,
+      calories: calories === undefined ? 0 : parseInt(calories.value),
+      carbohydrates:
+        carbohydrates === undefined ? 0 : parseInt(carbohydrates.value),
+      protein: protein === undefined ? 0 : parseInt(protein.value),
+      total_fat: total_fat === undefined ? 0 : parseInt(total_fat.value),
       amount: parseInt(0),
     };
-    if (isNaN(food.serving_size)) {
-      food.serving_size = 1;
-    }
-    if (food.serving_size_unit === undefined) {
-      food.serving_size_unit = "N/A";
-    }
+
     setCurrentFood(food);
     // testing
     console.log(food);
@@ -121,21 +108,25 @@ const AddMealModal = () => {
     }
   };
 
-  const handleAddMeal = () => {
+  async function doAddMeal(name) {
+    const response = await addMeal(name);
+    let mealId = response.id;
+    for (let i = 0; i < meal.length; i++) {
+      addFood(mealId, meal[i]);
+    }
+    setSearchResults();
+    setCurrentFood();
+    setMeal([]);
+    closeModal();
+
+    props.updateMeals();
+  }
+
+  const handleAddMeal = (name) => {
     if (meal.length === 0) {
       console.log("There is not food yet");
     } else {
-      addMeal("default_meal_name").then((response) => {
-        // TODO
-        let mealId = response.id;
-        for (let i = 0; i < meal.length; i++) {
-          addFood(mealId, meal[i]);
-        }
-      });
-      setSearchResults();
-      setCurrentFood();
-      setMeal([]);
-      closeModal();
+      doAddMeal(name);
     }
   };
 

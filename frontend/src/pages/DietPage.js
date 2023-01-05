@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "../components/Card/Card";
-import AddMeal from "../components/Card/AddNewCard";
 import DietPageCSS from "./DietPage.module.scss";
 import Sidebar from "../components/Sidebar/Sidebar";
 import AddMealModal from "../components/AddMealModal";
@@ -15,12 +14,13 @@ const DietPage = (props) => {
     const res = await response.json();
     return res;
   }
+  
+  const getMeals = async () => {
+    const meals = await getMealsFetch();
+    setUserMeals(() => meals);
+  }
 
   useEffect(() => {
-    async function getMeals() {
-      const meals = await getMealsFetch();
-      setUserMeals(() => meals);
-    }
     getMeals();
   }, []);
 
@@ -38,7 +38,7 @@ const DietPage = (props) => {
             )}
           </div>
         </div>
-        <AddMealModal />
+        <AddMealModal updateMeals={getMeals} csrfToken={props.csrfToken}/>
       </div>
     </div>
   );
