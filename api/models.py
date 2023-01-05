@@ -2,11 +2,11 @@ from django.db import models
 
 # Create your models here.
 class Exercise(models.Model):
-    name = models.CharField(max_length=40, default="")
     equipment = models.CharField(max_length=40, default="")
-    PR = models.IntegerField(null=False, default=0)
-    reps = models.IntegerField(null=False, default=0)
-    sets = models.IntegerField(null=False, default=0)
+    gifUrl = models.CharField(max_length=200, default="")
+    name = models.CharField(max_length=50, default="")
+    target = models.CharField(max_length=12, default="")
+
 
 class WorkOut(models.Model):
     name = models.CharField(max_length=40, default="")

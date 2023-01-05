@@ -1,0 +1,19 @@
+.container{
+    margin: 10px;
+}
+.ExerciseGif{
+    width: 200px;
+    height: 200px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+.exercise{
+    width: 400px;
+    border-radius: 25px;
+    background-color: #6b8d9e;
+    box-shadow: -5px 5px rgb(40, 53, 66);
+    border-style: solid;
+    border-color: black;
+}
