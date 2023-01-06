@@ -10,12 +10,37 @@ from rest_framework.response import Response
 class ExerciseView(generics.ListAPIView):
     queryset = Exercise.objects.all()
     serializer_class = ExerciseSerializer
+    bodyWeight = ["assisted", "body weight","bosu ball", "roller", "rope", "stability ball", "tire","wheel roller","hammer"]
+    band = ["band", "resistance band"]
+    duration = ["elliptical machine","skierg machine","stationary bike","stepmill machine"]
 
-    def get(self, request, group):
-        queryset = Exercise.objects.filter(target=group)
-        serializer = ExerciseSerializer(queryset, many=True)
-        return Response(serializer.data)
-
+    def get(self, request, group,type):
+        if group == "all":
+            muscle = Exercise.objects.all()
+        else:
+            muscle = Exercise.objects.filter(target=group)
+        
+        if type != "all":
+            if type in self.bodyWeight:
+                queryset = Exercise.objects.filter(target=group).filter(equipment__in=["assisted", "body weight","bosu ball", "roller", "rope", "stability ball", "tire","wheel roller"])
+                bodyweight = ExerciseSerializer(queryset, many=True)
+                return Response(bodyweight.data)
+            elif type in self.band:
+                queryset = Exercise.objects.filter(target=group).filter(equipment__in=["band", "resistance band"])
+                band = ExerciseSerializer(queryset, many=True)
+                return Response(band.data)
+            elif type in self.duration:
+                queryset = Exercise.objects.filter(target=group).filter(equipment__in=["elliptical machine","skierg machine","stationary bike","stepmill machine"])
+                duration = ExerciseSerializer(queryset, many=True)
+                return Response(duration.data)
+            else:
+                queryset = Exercise.objects.filter(target=group).filter(equipment__in=["barbell","cable","dumbbell","ez barbell","kettlebell","leverage machine","olympic barbell","sled machine","smith machine","trap bar","weighted"])
+                weights = ExerciseSerializer(queryset, many=True)
+                return Response(weights.data)
+        else:
+            serializer = ExerciseSerializer(muscle, many=True)
+            return Response(serializer.data)
+        
 class WorkOutView(generics.ListAPIView):
     queryset = WorkOut.objects.all()
     serializer_class = WorkOutSerializer

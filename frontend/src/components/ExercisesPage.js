@@ -63,12 +63,12 @@ export default class ExercisePage extends Component {
     };
 
     getExercises = async () => {
-        const response = await fetch("/api/exercise/"+this.state.muscle);
+        const response = await fetch("/api/exercise/"+this.state.muscle+"/"+this.state.equipment);
         const res = await response.json();
         this.setState({
             exercises: res,
         })
-        console.log(this.state.muscle);
+        console.log(res);
     }
 
     whichExercise(exercise){
@@ -112,7 +112,7 @@ export default class ExercisePage extends Component {
                     <Select
                         labelId="demo-multiple-name-label"
                         id="demo-multiple-name"
-                        value={this.state.type}
+                        value={this.state.equipment}
                         onChange={this.handleTypeChanged}
                         input={<OutlinedInput label="Name" />}
                         MenuProps={MenuProps}
